@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>SDP API - Hoş Geldiniz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. FRESH VE PARLAK GRADYAN ARKA PLAN */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      /* Modern ve temiz bir görünüm için 'Poppins' fontu */
+      font-family: 'Poppins', sans-serif;
+      
+      /* İstenen mor ve pembe tonlarında, daha parlak ve enerjik bir gradyan */
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    /* 2. ANİMASYONLU YAZI İÇİN MERKEZİ KONTEYNER */
+    .text-container {
+      text-align: center;
+    }
+
+    /* 3. ANA BAŞLIK ("Hello World!") STİLİ VE ANİMASYONU */
+    #main-text {
+      font-size: 5rem;
+      font-weight: 700;
+      margin: 0;
+      
+      /* Başlangıçta görünmez yapıp animasyonla ortaya çıkaracağız */
+      opacity: 0;
+      
+      /* Yumuşak bir şekilde aşağıdan yukarı kayarak belirme animasyonu */
+      animation: fadeInSlideUp 1.2s ease-out forwards;
+    }
+
+    /* 4. ALT BAŞLIK ("Welcome to...") STİLİ VE ANİMASYONU */
+    #sub-text {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-top: 10px;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.8); /* Ana başlığa göre daha az belirgin */
+      
+      /* Başlangıçta görünmez yapıp animasyonla ortaya çıkaracağız */
+      opacity: 0;
+      
+      /* Ana başlıktan biraz sonra başlayacak şekilde gecikmeli animasyon */
+      animation: fadeInSlideUp 1.2s ease-out 0.5s forwards;
+    }
+
+    /* Aşağıdan yukarı kayarak belirme animasyonunun tanımı */
+    @keyframes fadeInSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px); /* Başlangıçta 30 piksel aşağıda */
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0); /* Son konumda */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="text-container">
+    <h1 id="main-text"></h1>
+    <p id="sub-text"></p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // API'dan mesajı alıyoruz (bu kısım değişmedi)
+      fetch('http://localhost:3000/api/v1/')
+        .then(response => response.json())
+        .then(data => {
+          const fullMessage = data.message; // "Hello World! Welcome to the SDP API."
+          
+          // --- DEĞİŞİKLİK BURADA ---
+          // API'dan gelen mesajı "!" karakterinden ikiye ayırıyoruz.
+          const parts = fullMessage.split('! ');
+
+          const mainTextElement = document.getElementById('main-text');
+          const subTextElement = document.getElementById('sub-text');
+
+          // Eğer mesaj beklendiği gibi ikiye ayrıldıysa
+          if (parts.length === 2) {
+            mainTextElement.textContent = parts[0] + '!'; // "Hello World!"
+            subTextElement.textContent = parts[1];      // "Welcome to the SDP API."
+          } else {
+            // Bir sorun olursa tüm mesajı ana başlığa yaz
+            mainTextElement.textContent = fullMessage;
+          }
+        })
+        .catch(error => console.error('Hata:', error));
+    });
+  </script>
+
+</body>
+</html>

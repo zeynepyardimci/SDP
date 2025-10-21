@@ -1,0 +1,41 @@
+/* Bu kısmı app/assets/stylesheets/stil.css gibi bir dosyaya ekle */
+
+.typing-container {
+  display: inline-block;
+}
+
+.typing-text {
+  font-family: 'Courier New', Courier, monospace; /* Daktilo yazı tipi */
+  font-size: 3rem; /* Yazı boyutu */
+  color: #7918e0;
+  overflow: hidden; /* Dışarı taşan harfleri gizle */
+  border-right: 0.15em solid orange; /* Yanıp sönen imleç */
+  white-space: nowrap; /* Metnin alt satıra geçmesini engelle */
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+
+  /* Animasyonun tanımı */
+  animation: typing 3.5s steps(11, end),
+    /* 11 harf için 11 adımda tamamlansın */ blink-caret 0.75s step-end infinite;
+}
+
+/* Yazma animasyonu */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* İmleç yanıp sönme animasyonu */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: blue;
+  }
+}
